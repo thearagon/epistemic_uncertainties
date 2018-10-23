@@ -11,7 +11,7 @@ This class helps modifying the assumed fault geometry to calculate various Green
 #### uncertainties
 This class allows us to calculate the uncertainties in the predictions.
 
-### Installation
+## Installation
 No installation needed. Just download the file epistemic_uncertainties.py 
 
 ## Usage
@@ -82,7 +82,7 @@ uncert = uncer(faultdir, Np, multifault=False, export=True)
 uncert.calcCpDip(GFs,dip_range,sigma_dip,mprior)
 ```
 
-### License
+## License
 
 Copyright © 2018-2023 Théa Ragon
 
