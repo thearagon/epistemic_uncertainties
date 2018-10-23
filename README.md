@@ -26,8 +26,7 @@ To compute various fault geometries to calculate Green's functions:
 
 1) Write your fault geometry in a file with a GMT format (lon lat Z for each patch, separated by a >)
 2) Initialize the class changeFault
-3) Vary the initial fault geometry using varyDip, varyStrike or varyPosition
-3bis) Or, using your own code, vary the inital fault geometry at your convenience
+3) Vary the initial fault geometry using varyDip, varyStrike or varyPosition OR using your own code, vary the inital fault geometry at your convenience
 
 #### example:
 ```python
