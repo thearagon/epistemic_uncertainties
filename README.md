@@ -20,13 +20,14 @@ In the following, you will find:
 No installation needed. Just download the file epistemic_uncertainties.py 
 
 ## Usage
-An example python script is avaialble in the folder `example`
+An example python script is available in the folder `example`
 
 To compute various fault geometries to calculate Green's functions:
 
 1) Write your fault geometry in a file with a GMT format (lon lat Z for each patch, separated by a >)
-2) initialize the class changeFault
-3) vary the initial fault geometry using varyDip, varyStrike or varyPosition
+2) Initialize the class changeFault
+3) Vary the initial fault geometry using varyDip, varyStrike or varyPosition
+3bis) Or, using your own code, vary the inital fault geometry at your convenience
 
 #### example:
 ```python
