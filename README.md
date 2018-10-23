@@ -17,7 +17,7 @@ In the following, you will find:
 - [License](#license)
 
 ## Installation
-No installation needed. Just download the file epistemic_uncertainties.py 
+No installation needed. Just download the file `epistemic_uncertainties.py` 
 
 ## Usage
 An example python script is available in the folder `example`. A detailed documentation is available in `doc/doc.txt`.
