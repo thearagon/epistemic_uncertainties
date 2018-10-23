@@ -1,0 +1,239 @@
+Help on module epistemic_uncertainties:
+
+NAME
+    epistemic_uncertainties
+
+DESCRIPTION
+    An ensemble of classes dealing with uncertainties in the fault geometry
+    Written by T. Ragon October 2018
+
+CLASSES
+    changeFault
+    uncertainties
+    
+    class changeFault
+     |  Modify the fault geometry, to be used to calculate Green's Functions
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, faultdir, filename, nstrike, utmzone, inputCoordinates='lonlatz', nbrcorners=4, verbose=True)
+     |      Open and read fault file. The file need to be in GMT format:
+     |      lon lat z for each patch corner (or x y z)
+     |      list of patches separated by '>'
+     |      
+     |      :Args:
+     |          * faultdir  : Path of the directory where to find fault file
+     |          * filename  : name of the fault file, or list of names
+     |          * nstrike   : number of patches along strike for the first row (the closest to the Earth surface)
+     |          * utmzone   : utm zone of the data
+     |          
+     |       :Optional Args:
+     |          * inputCoordinates  : 'lonlatz' or 'xyz'. 'lonlatz' by default
+     |          * nbrcorners        : number of corners for each patch, by default is 4
+     |  
+     |  ll2xy(self, lon, lat)
+     |      Do the lat/lon to UTM transform. 
+     |      Input is in degrees. UTM coordinates are returned in km.
+     |      
+     |      :Args:
+     |          * lon       : Longitude (deg)
+     |          * lat       : Latitude (deg)
+     |      
+     |      :Returns:
+     |          * x         : UTM coordinate x (km)
+     |          * y         : UTM coordinate y (km)
+     |  
+     |  pointRotation3D(self, iPatch, iPoint, theta, p_axis1, p_axis2)
+     |      Rotate a point with an arbitrary axis (fault tip)
+     |      Used in rotatePatch
+     |      
+     |      :Args:
+     |          * Point: array of coordinates for the patch corner (point) to be rotated
+     |          * theta : angle of rotation in degrees
+     |          * p_axis1 : first point of axis (ex: one side of a fault)
+     |          * p_axis2 : second point to define the axis (ex: the other side of a fault)
+     |          
+     |      :Returns:
+     |          * rotated point
+     |      Reference: 'Rotate A Point About An Arbitrary Axis (3D)' - Paul Bourke
+     |  
+     |  rotatePatch(self, iPatch, theta, p_axis1, p_axis2)
+     |      Rotate a patch with an arbitrary axis (fault tip)
+     |      Used by class uncertainties
+     |      
+     |      :Args:
+     |          * iPatch: index of the patch to be rotated
+     |          * theta : angle of rotation in degrees
+     |          * p_axis1 : first point of axis (ex: one side of a fault)
+     |          * p_axis2 : second point to define the axis (ex: the other side of a fault)
+     |          
+     |      :Returns:
+     |          * rotated patch
+     |  
+     |  translatePatch(self, iPatch, tr_vector)
+     |      Translate a patch
+     |      Used by class uncertainties
+     |      
+     |      :Args:
+     |          * iPatch: index of the patch to be rotated
+     |          * tr_vector: array, translation vector in 3D
+     |          
+     |      :Returns:
+     |          * None
+     |  
+     |  varyDip(self, dip_range)
+     |      Calculate new fault geometries with various dip values
+     |      
+     |      :Args:
+     |          * dip_range : array, dip values (in degrees) to test around the prior fault dip
+     |                  ex: dip_range = [-2,-1,0,1,2]
+     |      :Returns:
+     |          None
+     |  
+     |  varyPosition(self, position_range)
+     |      Calculate new fault geometries with various position values
+     |      
+     |      :Args:
+     |          * position_range : array, position values (in km) to test around the prior fault position
+     |                  Positive values are +90 degrees from the prior strike
+     |                  ex: position_range = [-1,0,1,2]
+     |      :Returns:
+     |          None
+     |  
+     |  varyStrike(self, stk_range, rotation_axis)
+     |      Calculate new fault geometries with various strike values
+     |      
+     |      :Args:
+     |          * strike_range : array, strike values (in degrees) to test around the prior fault strike
+     |                  ex: strike_range = [-1,0,1,2]
+     |           * rotation_axis : can be 'center', 'first', 'second' or an had-oc position [X,Y]
+     |                  define the axis around which the fault will rotate
+     |                  'center' : the center of the fault
+     |                  'first'  : the first point of the fault trace (Fault.xf[0],Fault.yf[0])
+     |                  'last'   : the last point of the fault trace (Fault.xf[-1],Fault.yf[-1])
+     |                  [X,Y]    : ad-hoc coordinates
+     |      :Returns:
+     |          None
+     |  
+     |  writeFault2File(self, filename)
+     |      Writes the patch corners in a file that can be used in psxyz.
+     |      
+     |      :Args:
+     |          * filename : Name of the file
+     |  
+     |  xy2ll(self, x, y)
+     |      Do the UTm to lat/lon transform.
+     |      Input is in km. Output is in degrees.
+     |      
+     |      :Args:
+     |          * x         : UTM longitude (km).
+     |          * y         : UTM latitude (km)
+     |      
+     |      :Returns: 
+     |          * lon       : Longitude (degrees)
+     |          * lat       : Latitude (degree)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods defined here:
+     |  
+     |  toDegrees(angle)
+     |      # ----------------------------------------------------------------------
+     |  
+     |  toRadians(angle)
+     |      # ----------------------------------------------------------------------
+    
+    class uncertainties
+     |  Class to calculate the covariance matrix of the predictions related to the uncertainties in the fault geometry.
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, gfdir, Np, multifault=False, export=None, verbose=True)
+     |      Class calculating the covariance matrix of the predictions.
+     |      
+     |      :Args:
+     |          * gfdir      : string with path to directory where Green's Functions are stored   
+     |          * Np         : number of parameters of the model
+     |          * multifault : False if only 1 fault segment, True else
+     |                  Faulse by default
+     |          * export     : None by default, or string with path to directory
+     |  
+     |  calcCpDip(self, filenames, dip_range, sigma, mprior)
+     |      Calculate the uncertainties of the predictions deriving from uncertainties in the fault dip.
+     |      From Ragon et al. (2018) GJI
+     |      
+     |      :Args:
+     |          * filenames : array with strings, corresponding to name of the Green's Functions files
+     |                  ex: ['GF_dip_-1.txt','GF_dip_0.txt','GF_dip_1.txt']
+     |                  If there are several fault segments (e.g. multifault is True), len(filenames) must be equal to the number of segments
+     |                  ex: [['GF_seg1_dip_-1.txt','GF_seg1_dip_0.txt','GF_seg1_dip_1.txt'],['GF_seg2_dip_-2.txt','GF_seg2_dip_-1.txt','GF_seg2_dip_0.txt','GF_seg2_dip_1.txt']]
+     |          * dip_range : difference between initial dip and the ones used to calculate Green's Functions (in degrees).
+     |                  (the same dip_range as the one used to calculate Green's functions)
+     |                  ex: dip_range = [-1,0,1,2]
+     |                  If there are several fault segments (e.g. multifault is True), len(dip_range) must be equal to the number of segments
+     |                  ex: dip_range = [[-1,0,1,2],[-2,-1,0,1,2,3],[-1.5,-1,-0.5,0],[0,1,2]] for a fault with 4 segments
+     |          * sigma     : prior uncertainty (standard deviation) in the dip parameter (in degrees)
+     |                  ex: sigma = 5
+     |                  If there are several fault segments (e.g. multifault is True), len(sigma) must be equal to the number of segments
+     |                  ex: sigma = [5,7,2,3] for a fault with 4 segments
+     |          * mprior    : initial model used to calculate Cp
+     |                  length must be equal to two times the number of patches
+     |                  can be uniform and derived from Mo, ex: meanslip = -Mo*10**(-7)/(3*10**10*length*width)
+     |                  OR derived from a first inversion without accounting for uncertainties
+     |              
+     |      :Returns:
+     |          * CpDip
+     |  
+     |  calcCpPosition(self, filenames, position_range, sigma, mprior)
+     |      Calculate the uncertainties of the predictions deriving from uncertainties in the fault position.
+     |      From Ragon et al. (2018) GJI
+     |      
+     |      :Args:
+     |          * filenames : array with strings, corresponding to name of the Green's Functions files
+     |                  ex: ['GF_strike_-1.txt','GF_strike_0.txt','GF_strike_1.txt']
+     |                  If there are several fault segments (e.g. several faults in fault), len(filenames) must be equal to the number of segments
+     |                  ex: [['GF_seg1_strike_-1.txt','GF_seg1_strike_0.txt','GF_seg1_strike_1.txt'],['GF_seg2_strike_-2.txt','GF_strike_dip_-1.txt','GF_seg2_strike_0.txt','GF_seg2_strike_1.txt']]
+     |          * position_range : difference between initial position and the ones used to calculate Green's Functions (in km).
+     |                  Positive values are +90 degrees from the prior strike
+     |                  ex: position_range = [-1,0,1,2]
+     |                  If there are several fault segments (e.g. several faults in fault), len(dip_range) must be equal to the number of segments
+     |                  ex: position_range = [[-1,0,1,2],[-2,-1,0,1,2,3],[-1.5,-1,-0.5,0],[0,1,2]] for a fault with 4 segments
+     |          * sigma : prior uncertainty (standard deviation) in the fault position (in km)
+     |                  ex: sigma = 5
+     |                  If there are several fault segments (e.g. multifault is True), len(sigma) must be equal to len(filenames)
+     |                  ex: sigma = [1,0.5,1,0.5] for a fault with 4 segments
+     |          * mprior : initial model used to calculate Cp
+     |                  length must be equal to two times the number of patches
+     |                  can be uniform and derived from Mo, ex: meanslip = -Mo*10**(-7)/(3*10**10*length*width)
+     |                  OR derived from a first inversion without accounting for uncertainties
+     |                 
+     |      :Returns:
+     |          * CpPosition
+     |  
+     |  calcCpStrike(self, filenames, strike_range, sigma, mprior)
+     |      Calculate the uncertainties of the predictions deriving from uncertainties in the fault strike.
+     |      From Ragon et al. (2018) GJI
+     |      
+     |      :Args:
+     |          * filenames : array with strings, corresponding to name of the Green's Functions files
+     |                  ex: ['GF_strike_-1.txt','GF_strike_0.txt','GF_strike_1.txt']
+     |                  If there are several fault segments (e.g. multifault is True), len(filenames) must be equal to the number of segments
+     |                  ex: [['GF_seg1_strike_-1.txt','GF_seg1_strike_0.txt','GF_seg1_strike_1.txt'],['GF_seg2_strike_-2.txt','GF_strike_dip_-1.txt','GF_seg2_strike_0.txt','GF_seg2_strike_1.txt']]
+     |          * strike_range : array,difference between initial strike and the ones used to calculate Green's Functions (in degrees).
+     |                  Positive angles are counter-clockwise looking toward the center of the Earth
+     |                  ex: strike_range = [-1,0,1,2]
+     |                  If whole_fault is False (e.g. multifault is True), len(strike_range) must be equal to len(filenames)
+     |                  ex: strike_range= [[-1,0,1,2],[-2,-1,0,1,2,3],[-1.5,-1,-0.5,0],[0,1,2]] for a fault with 4 segments
+     |          * sigma : prior uncertainty (standard deviation) in the strike parameter (in degrees)
+     |                  ex: sigma = 5
+     |                  If whole_fault is False (e.g. multifault is True), len(sigma) must be equal to len(filenames)
+     |                  ex: sigma = [5,7,2,3] for a fault with 4 segments
+     |          * mprior : initial model used to calculate Cp
+     |                  length must be equal to two times the number of patches
+     |                  can be uniform and derived from Mo, ex: meanslip = -Mo*10**(-7)/(3*10**10*length*width)
+     |                  OR derived from a first inversion without accounting for uncertainties
+     |      
+     |              
+     |      :Returns:
+     |          * CpStrike
+
+
