@@ -1,9 +1,9 @@
 ## epistemic_uncertainties
-Account for uncertainties in the assumed fault geometry. The purpose of this module is to calculate covariance matrices of the predictions derived from the uncertainties in the assumed fault geometry. This methodology is used in [Ragon et al. (2018)]
+Account for uncertainties in the assumed fault geometry. The purpose of this module is to calculate covariance matrices of the predictions derived from the uncertainties in the assumed fault geometry. This methodology is used in [Ragon et al. (2018)].
 
   [Ragon et al. (2018)]: https://academic.oup.com/gji/advance-article/doi/10.1093/gji/ggy187/4996353?guestAccessKey=86188bcd-f078-4700-9762-27d888995596
  
-To account for uncertainties in the Earth elastic properties, please refer to [Duputel et al. (2014)]
+To account for uncertainties in the Earth elastic properties, please refer to [Duputel et al. (2014)].
 
   [Duputel et al. (2014)]: https://academic.oup.com/gji/article/197/1/464/686313
 
@@ -20,7 +20,7 @@ In the following, you will find:
 No installation needed. Just download the file epistemic_uncertainties.py 
 
 ## Usage
-An example python script is available in the folder `example`
+An example python script is available in the folder `example`. A detailed documentation is available in `doc/doc.txt`.
 
 To compute various fault geometries to calculate Green's functions:
 
