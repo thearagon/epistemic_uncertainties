@@ -22,6 +22,7 @@ In the following, you will find:
 No installation needed. Just download the file epistemic_uncertainties.py 
 
 ## Usage
+An example python script is avaialble in the folder `example`
 
 To compute various fault geometries to calculate Green's functions:
 
@@ -29,7 +30,7 @@ To compute various fault geometries to calculate Green's functions:
 2) initialize the class changeFault
 3) vary the initial fault geometry using varyDip, varyStrike or varyPosition
 
-#### exemple:
+#### example:
 ```python
 # import the classes
 from epistemic_uncertainties import changeFault as chf
@@ -50,7 +51,7 @@ faultvar.varyDip(dip_range)
 4) Once several fault geometries are calculated, you can calculate the related Green's functions using your favorite tool
 5) Save each Green's function to a file
 
-#### exemple:
+#### example:
 ```python
 # Import you data
 data = [gps]
@@ -65,7 +66,7 @@ for d in dip_range:
 
 6) Calculate or import your a priori slip model
 
-#### exemple:
+#### example:
 ```python
 length = 26
 width = 20
@@ -80,7 +81,7 @@ Then, use the class uncertainties to calculate the uncertainties in your fault g
 7) Initialize the class uncertainties
 8) Calculate the uncertainties with the functions calcCpDip, calcCpStrike or calcCpPosition
 
-#### exemple:
+#### example:
 ```python
 Np = 308  # number of parameters
 GFs = ['G_dip_'+str(d)+'.txt' for d in dip_range]  # list of the Green's functions
@@ -93,6 +94,6 @@ uncert.calcCpDip(GFs,dip_range,sigma_dip,mprior)
 
 Copyright © 2018-2023 Théa Ragon
 
-This work  is free. You can  redistribute it and/or modify it under the terms of the MIT license. See the LICENSE file for more details.
+This work  is free. You can  redistribute it and/or modify it under the terms of the MIT license. See the `LICENSE` file for more details.
 
 This program  is free software.  It comes  without any warranty,  to the extent permitted by applicable law.
