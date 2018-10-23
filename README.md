@@ -78,7 +78,7 @@ Then, use the class uncertainties to calculate the uncertainties in your fault g
 Np = 308  # number of parameters
 GFs = ['G_dip_'+str(d)+'.txt' for d in dip_range]  # list of the Green's functions
 sigma_dip = 5  # standard deviation on the dip parameter
-uncert = uncer(faultdir, Np, multifault=False)
+uncert = uncer(faultdir, Np, multifault=False, export='./')
 uncert.calcCpDip(GFs,dip_range,sigma_dip,mprior)
 ```
 
