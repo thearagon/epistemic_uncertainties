@@ -51,7 +51,7 @@ data = [gps]
 # calculate Green's functions for each fault dip 
 for d in dip_range:
     fault = rectFault('fault') 
-    fault.readPatchesFromFile(faultdir+'faultfile_dip'+str(d)+'.rectangle')   # personnal functions to import fault
+    fault.readPatchesFromFile(faultdir+'faultfile_dip_'+str(d)+'.rectangle')   # personnal functions to import fault
     fault.buildGFs(data)  # Calculate the Green's functions
     fault.G.tofile('G_dip_'+str(d)+'.txt') # Save each GF to file
 ```
