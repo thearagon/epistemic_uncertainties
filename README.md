@@ -1,7 +1,5 @@
 ## epistemic_uncertainties
-Account for uncertainties in the assumed fault geometry. The purpose of this module is to calculate covariance matrices of the predictions derived from the uncertainties in the assumed fault geometry.
-
-This methodology is used in [Ragon et al. (2018)]
+Account for uncertainties in the assumed fault geometry. The purpose of this module is to calculate covariance matrices of the predictions derived from the uncertainties in the assumed fault geometry. This methodology is used in [Ragon et al. (2018)]
 
   [Ragon et al. (2018)]: https://academic.oup.com/gji/advance-article/doi/10.1093/gji/ggy187/4996353?guestAccessKey=86188bcd-f078-4700-9762-27d888995596
  
